@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell alpha="0.0" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AnswerTableViewCell" rowHeight="144" id="KGk-i7-Jjw" customClass="AnswerTableViewCell" customModule="NanoCrashChallenge2" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="524" height="144"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="524" height="144"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0aD-Wz-Ei9">
+                        <rect key="frame" x="5" y="42" width="60" height="60"/>
+                        <color key="tintColor" name="projectWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="RoC-Kz-c7L"/>
+                            <constraint firstAttribute="width" constant="60" id="TeH-7c-Bxo"/>
+                        </constraints>
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2nw-3w-suu">
+                        <rect key="frame" x="75" y="0.0" width="439" height="144"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" name="projectWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="2nw-3w-suu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="A2B-jI-u5s"/>
+                    <constraint firstAttribute="bottom" secondItem="2nw-3w-suu" secondAttribute="bottom" id="Yym-J9-N0A"/>
+                    <constraint firstAttribute="trailing" secondItem="2nw-3w-suu" secondAttribute="trailing" constant="10" id="hYj-Hw-drX"/>
+                    <constraint firstItem="0aD-Wz-Ei9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="nqQ-XX-44B"/>
+                    <constraint firstItem="2nw-3w-suu" firstAttribute="leading" secondItem="0aD-Wz-Ei9" secondAttribute="trailing" constant="10" id="qRp-r7-Ggd"/>
+                    <constraint firstItem="0aD-Wz-Ei9" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="xa2-cH-7Bc"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" name="projectPurple"/>
+            <color key="tintColor" red="0.98441392179999998" green="0.9920243621" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <connections>
+                <outlet property="answerText" destination="2nw-3w-suu" id="tWj-nc-Xcr"/>
+                <outlet property="imageMarkerView" destination="0aD-Wz-Ei9" id="xQh-YE-F5w"/>
+            </connections>
+            <point key="canvasLocation" x="255.14018691588782" y="154.85961123110152"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="projectPurple">
+            <color red="0.22745098039215686" green="0.25098039215686274" blue="0.41568627450980394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="projectWhite">
+            <color red="0.98431372549019602" green="0.99215686274509807" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
