@@ -44,23 +44,30 @@ class QuizzViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     // Table View Functions
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return currentQuestion?.answers.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = UIColor.clear
+        return headerView
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AnswerTableViewCell.identifier, for: indexPath) as! AnswerTableViewCell
-        cell.configure(with: currentQuestion!.answers[indexPath.row].text, markerName: "circlebadge")
+        cell.configure(with: currentQuestion!.answers[indexPath.section].text, markerName: "circlebadge")
         
-        // Adds margin to cell
+        // Adds border to cell
         cell.contentView.layer.borderWidth = 0.4
         cell.contentView.layer.borderColor = UIColor(named: "projectWhite")!.cgColor
-        
+        cell.contentView.layer.cornerRadius = 5
+
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 65
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
