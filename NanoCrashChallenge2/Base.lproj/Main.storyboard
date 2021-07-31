@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kw1-Sk-bOJ">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
@@ -8,6 +8,22 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="qaI-2j-oSu">
+            <objects>
+                <navigationController id="kw1-Sk-bOJ" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="XdC-YM-ILG">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="uf9-Hx-Hi3"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tT6-da-aZD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-764" y="108"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -16,8 +32,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U4M-Au-2zH">
+                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="KqF-uP-aFg"/>
+                                </constraints>
+                                <items>
+                                    <tabBarItem title="Home" image="house.fill" catalog="system" id="b8x-WJ-eQK">
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </tabBarItem>
+                                    <tabBarItem title="Profile" image="person.fill" catalog="system" id="tFo-8Y-H7i"/>
+                                </items>
+                                <color key="tintColor" name="projectLightPurple"/>
+                            </tabBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6ty-Kj-hBe">
+                                <rect key="frame" x="30" y="376" width="354" height="437"/>
+                                <color key="backgroundColor" name="projectWhite"/>
+                            </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kzD-uf-adB">
-                                <rect key="frame" x="0.0" y="-57" width="414" height="368"/>
+                                <rect key="frame" x="0.0" y="-25" width="414" height="368"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K9Z-a4-wGr">
                                         <rect key="frame" x="85" y="238" width="304" height="22"/>
@@ -43,7 +80,7 @@
                                 <constraints>
                                     <constraint firstItem="K9Z-a4-wGr" firstAttribute="leading" secondItem="CCh-iy-iBq" secondAttribute="trailing" constant="10" id="Cc4-cN-5fh"/>
                                     <constraint firstItem="dem-b6-uBS" firstAttribute="top" secondItem="K9Z-a4-wGr" secondAttribute="bottom" constant="42" id="S8C-3y-AT8"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dem-b6-uBS" secondAttribute="trailing" symbolic="YES" id="Zeh-2b-R5l"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dem-b6-uBS" secondAttribute="trailing" constant="20" symbolic="YES" id="Zeh-2b-R5l"/>
                                     <constraint firstAttribute="bottom" secondItem="dem-b6-uBS" secondAttribute="bottom" constant="37" id="cdd-nv-xB8"/>
                                     <constraint firstItem="dem-b6-uBS" firstAttribute="leading" secondItem="kzD-uf-adB" secondAttribute="leading" constant="40" id="dhQ-tl-0h7"/>
                                     <constraint firstAttribute="trailing" secondItem="K9Z-a4-wGr" secondAttribute="trailing" constant="25" id="hnx-18-eJ5"/>
@@ -58,27 +95,6 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U4M-Au-2zH">
-                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="49" id="KqF-uP-aFg"/>
-                                </constraints>
-                                <items>
-                                    <tabBarItem title="Home" image="house.fill" catalog="system" id="b8x-WJ-eQK">
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
-                                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </tabBarItem>
-                                    <tabBarItem title="Profile" image="person.fill" catalog="system" id="tFo-8Y-H7i"/>
-                                </items>
-                                <color key="tintColor" name="projectLightPurple"/>
-                            </tabBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6ty-Kj-hBe">
-                                <rect key="frame" x="30" y="333" width="354" height="480"/>
-                                <color key="backgroundColor" name="projectWhite"/>
-                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="projectWhite"/>
@@ -86,41 +102,43 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="kzD-uf-adB" secondAttribute="trailing" id="34n-K2-vyZ"/>
                             <constraint firstAttribute="trailing" secondItem="U4M-Au-2zH" secondAttribute="trailing" id="8Px-m3-Dwf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="U4M-Au-2zH" secondAttribute="bottom" id="FcH-SB-k1m"/>
-                            <constraint firstItem="6ty-Kj-hBe" firstAttribute="top" secondItem="kzD-uf-adB" secondAttribute="bottom" constant="22" id="OoJ-gM-pKM"/>
-                            <constraint firstItem="kzD-uf-adB" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="-57" id="Q7t-44-1qk"/>
+                            <constraint firstItem="6ty-Kj-hBe" firstAttribute="top" secondItem="kzD-uf-adB" secondAttribute="bottom" constant="33" id="OoJ-gM-pKM"/>
+                            <constraint firstItem="kzD-uf-adB" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="-25" id="Q7t-44-1qk"/>
                             <constraint firstItem="kzD-uf-adB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="dUi-Vp-jjB"/>
-                            <constraint firstAttribute="bottom" secondItem="kzD-uf-adB" secondAttribute="bottom" constant="585" id="eAG-LE-Reg"/>
+                            <constraint firstAttribute="bottom" secondItem="kzD-uf-adB" secondAttribute="bottom" constant="553" id="eAG-LE-Reg"/>
                             <constraint firstAttribute="trailing" secondItem="6ty-Kj-hBe" secondAttribute="trailing" constant="30" id="mcj-jg-yNU"/>
                             <constraint firstItem="U4M-Au-2zH" firstAttribute="top" secondItem="6ty-Kj-hBe" secondAttribute="bottom" id="oPa-8A-263"/>
                             <constraint firstItem="6ty-Kj-hBe" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="v1f-1K-DEe"/>
                             <constraint firstItem="U4M-Au-2zH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="xIe-vU-2oH"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="kPF-Iu-J0I"/>
                     <connections>
+                        <outlet property="categoriesTable" destination="6ty-Kj-hBe" id="LT7-1c-xh7"/>
                         <outlet property="inspirationText" destination="dem-b6-uBS" id="jmm-8V-A8y"/>
                         <outlet property="profileName" destination="K9Z-a4-wGr" id="flC-71-bR9"/>
                         <outlet property="profilePicture" destination="CCh-iy-iBq" id="ZpH-6Q-3ta"/>
-                        <outlet property="table" destination="6ty-Kj-hBe" id="LT7-1c-xh7"/>
+                        <segue destination="i6A-To-5RI" kind="show" identifier="startQuizz" id="5Yh-bO-gZs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="107.8125"/>
+            <point key="canvasLocation" x="170" y="108"/>
         </scene>
         <!--Quizz View Controller-->
         <scene sceneID="VIl-ff-Y9b">
             <objects>
-                <viewController storyboardIdentifier="quizz" id="i6A-To-5RI" customClass="QuizzViewController" customModule="NanoCrashChallenge2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="i6A-To-5RI" customClass="QuizzViewController" customModule="NanoCrashChallenge2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zbf-zW-ICH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GVg-em-7CL">
-                                <rect key="frame" x="30" y="248" width="354" height="614"/>
+                                <rect key="frame" x="30" y="292" width="354" height="570"/>
                                 <color key="backgroundColor" name="projectPurple"/>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="inr-X5-ahW">
-                                <rect key="frame" x="25" y="64" width="364" height="183"/>
+                                <rect key="frame" x="25" y="108" width="364" height="183"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                 <color key="textColor" name="projectWhite"/>
                                 <nil key="highlightedColor"/>
@@ -139,6 +157,7 @@
                             <constraint firstItem="OHE-06-o16" firstAttribute="bottom" secondItem="GVg-em-7CL" secondAttribute="bottom" id="xXl-4Q-Kvs"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="cCG-JK-yW9"/>
                     <connections>
                         <outlet property="label" destination="inr-X5-ahW" id="nzX-9q-SCg"/>
                         <outlet property="table" destination="GVg-em-7CL" id="vhO-Kw-coV"/>
