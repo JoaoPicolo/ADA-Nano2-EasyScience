@@ -139,22 +139,30 @@
                                 <color key="backgroundColor" name="projectPurple"/>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="inr-X5-ahW">
-                                <rect key="frame" x="25" y="142" width="364" height="95"/>
+                                <rect key="frame" x="25" y="151" width="364" height="86"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                 <color key="textColor" name="projectWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sl5-Vb-sen">
+                                <rect key="frame" x="0.0" y="88" width="414" height="68"/>
+                                <color key="backgroundColor" name="projectPurple"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="OHE-06-o16"/>
                         <color key="backgroundColor" name="projectPurple"/>
                         <constraints>
+                            <constraint firstItem="OHE-06-o16" firstAttribute="trailing" secondItem="Sl5-Vb-sen" secondAttribute="trailing" id="7L7-HI-B55"/>
                             <constraint firstItem="GVg-em-7CL" firstAttribute="top" secondItem="inr-X5-ahW" secondAttribute="bottom" constant="8" id="A53-9a-50B"/>
+                            <constraint firstItem="Sl5-Vb-sen" firstAttribute="top" secondItem="OHE-06-o16" secondAttribute="top" id="ZYY-Gq-ooR"/>
                             <constraint firstItem="GVg-em-7CL" firstAttribute="top" secondItem="OHE-06-o16" secondAttribute="top" constant="157" id="ao6-Ti-nqQ"/>
                             <constraint firstItem="inr-X5-ahW" firstAttribute="leading" secondItem="OHE-06-o16" secondAttribute="leading" constant="25" id="brH-lc-BtB"/>
                             <constraint firstItem="OHE-06-o16" firstAttribute="trailing" secondItem="inr-X5-ahW" secondAttribute="trailing" constant="25" id="fFP-1m-oUL"/>
                             <constraint firstItem="GVg-em-7CL" firstAttribute="leading" secondItem="OHE-06-o16" secondAttribute="leading" constant="30" id="p3k-PV-ugb"/>
+                            <constraint firstItem="Sl5-Vb-sen" firstAttribute="leading" secondItem="OHE-06-o16" secondAttribute="leading" id="rYY-Za-tK7"/>
                             <constraint firstAttribute="trailing" secondItem="GVg-em-7CL" secondAttribute="trailing" constant="30" id="sM0-Ri-qk4"/>
-                            <constraint firstItem="inr-X5-ahW" firstAttribute="top" secondItem="OHE-06-o16" secondAttribute="top" constant="54" id="x9b-vb-fYh"/>
+                            <constraint firstItem="GVg-em-7CL" firstAttribute="top" secondItem="Sl5-Vb-sen" secondAttribute="bottom" constant="89" id="tV8-Rd-Vkm"/>
+                            <constraint firstItem="inr-X5-ahW" firstAttribute="top" secondItem="OHE-06-o16" secondAttribute="top" constant="63" id="x9b-vb-fYh"/>
                             <constraint firstItem="OHE-06-o16" firstAttribute="bottom" secondItem="GVg-em-7CL" secondAttribute="bottom" id="xXl-4Q-Kvs"/>
                         </constraints>
                     </view>
@@ -162,6 +170,7 @@
                     <connections>
                         <outlet property="answersTable" destination="GVg-em-7CL" id="vhO-Kw-coV"/>
                         <outlet property="label" destination="inr-X5-ahW" id="nzX-9q-SCg"/>
+                        <outlet property="questionsBar" destination="Sl5-Vb-sen" id="lHu-NS-HLl"/>
                         <outlet property="quizzNavigationItem" destination="cCG-JK-yW9" id="ZaM-Df-Xka"/>
                     </connections>
                 </viewController>

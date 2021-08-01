@@ -14,6 +14,7 @@ struct Answer {
 
 
 struct Question {
+    let id: Int
     let text: String
     let answers: [Answer]
 }
@@ -29,6 +30,7 @@ class QuizzViewController: UIViewController {
     @IBOutlet var label: UILabel!
     @IBOutlet var answersTable: UITableView!
     @IBOutlet var quizzNavigationItem: UINavigationItem!
+    @IBOutlet var questionsBar: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +52,41 @@ class QuizzViewController: UIViewController {
         currentQuestion = question
         answeredCorrectly = nil
         selectedAnswer = -1
+        
+        let total = quizzModels.count
+        questionsBar.layer.sublayers = nil
+        for i in 1...total {
+            if(i != currentQuestion?.id ?? 1) {
+                let circle = UIView(frame: CGRect(x: (i * 60), y: 30, width: 40, height: 40))
+                circle.backgroundColor = UIColor(named: "projectMediumPurple")
+                circle.layer.cornerRadius = 20
+                
+                let label = UILabel(frame: CGRect(x: 15, y: 10, width: 20, height: 20))
+                label.text = String(i)
+                label.textColor = UIColor(named: "projectWhite")
+                
+                circle.addSubview(label)
+                questionsBar.addSubview(circle)
+            }
+            else {
+                let circle = UIView(frame: CGRect(x: (i * 60), y: 27, width: 44, height: 44))
+                let gradient = CAGradientLayer()
+                gradient.colors = [UIColor(named: "projectGradientStart")!.cgColor, UIColor(named: "projectGradientEnd")!.cgColor]
+                gradient.endPoint = CGPoint(x: 0.6, y: 0.5)
+                gradient.frame = circle.bounds
+                circle.layer.addSublayer(gradient)
+                circle.layer.cornerRadius = 22
+                gradient.cornerRadius = 22
+                
+                let label = UILabel(frame: CGRect(x: 17, y: 12, width: 20, height: 20))
+                label.text = String(i)
+                label.textColor = UIColor(named: "projectWhite")
+                
+                circle.addSubview(label)
+                questionsBar.addSubview(circle)
+            }
+            
+        }
         
         answersTable.reloadData()
     }
@@ -84,15 +121,15 @@ class QuizzViewController: UIViewController {
     }
     
     private func setUpQuestions() {
-        quizzModels.append(Question(text: "Why stars have different colors?", answers: [Answer(text: "The color changes according to the temperature", corret: true), Answer(text: "Stars don't have colors", corret: false), Answer(text: "All stars have the same color", corret: false), Answer(text: "The color changes according to its chemical components", corret: false)]))
+        quizzModels.append(Question(id: 1, text: "Why stars have different colors?", answers: [Answer(text: "The color changes according to the temperature", corret: true), Answer(text: "Stars don't have colors", corret: false), Answer(text: "All stars have the same color", corret: false), Answer(text: "The color changes according to its chemical components", corret: false)]))
         
-        quizzModels.append(Question(text: "What happens when metal is heated?", answers: [Answer(text: "It contracts", corret: false), Answer(text: "Metals don't get heated", corret: false), Answer(text: "Nothing happens", corret: false), Answer(text: "It expands", corret: true)]))
+        quizzModels.append(Question(id: 2, text: "What happens when metal is heated?", answers: [Answer(text: "It contracts", corret: false), Answer(text: "Metals don't get heated", corret: false), Answer(text: "Nothing happens", corret: false), Answer(text: "It expands", corret: true)]))
         
-        quizzModels.append(Question(text: "What are shooting stars?", answers: [Answer(text: "Shooting stars are stars heavier than gravity", corret: false), Answer(text: "They are bits of dust and rocks falling into the atmosphere", corret: true), Answer(text: "They are glowing balloons", corret: false), Answer(text: "Ther are a different type of rain", corret: false)]))
+        quizzModels.append(Question(id: 3, text: "What are shooting stars?", answers: [Answer(text: "Shooting stars are stars heavier than gravity", corret: false), Answer(text: "They are bits of dust and rocks falling into the atmosphere", corret: true), Answer(text: "They are glowing balloons", corret: false), Answer(text: "Ther are a different type of rain", corret: false)]))
         
-        quizzModels.append(Question(text: "What are the world's biggest oxygen producer?", answers: [Answer(text: "Indoor plants, because of its quantity", corret: false), Answer(text: "Pythoplanktons are the biggest producers", corret: true), Answer(text: "All plants produce the same amount of oxygen", corret: false), Answer(text: "Trees are the biggest producers", corret: false)]))
+        quizzModels.append(Question(id: 4, text: "What are the world's biggest oxygen producer?", answers: [Answer(text: "Indoor plants, because of its quantity", corret: false), Answer(text: "Pythoplanktons are the biggest producers", corret: true), Answer(text: "All plants produce the same amount of oxygen", corret: false), Answer(text: "Trees are the biggest producers", corret: false)]))
         
-        quizzModels.append(Question(text: "What is an atom?", answers: [Answer(text: "Atoms are the smallest stars in universe", corret: false), Answer(text: "It's a chemical compound", corret: false), Answer(text: "One of the smallest pieces of matter", corret: true), Answer(text: "It's a law of physics", corret: false)]))
+        quizzModels.append(Question(id: 5, text: "What is an atom?", answers: [Answer(text: "Atoms are the smallest stars in universe", corret: false), Answer(text: "It's a chemical compound", corret: false), Answer(text: "One of the smallest pieces of matter", corret: true), Answer(text: "It's a law of physics", corret: false)]))
     }
 
 }
