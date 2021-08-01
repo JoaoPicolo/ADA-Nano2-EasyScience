@@ -39,12 +39,18 @@ class QuizzViewController: UIViewController, UITableViewDelegate, UITableViewDat
         answersTable.reloadData()
     }
     
+    @objc private func verifyAnswer() -> Bool {
+        print("ok")
+//        return question.answers.contains(where: { $0.text == answer.text }) && answer.corret
+        return true
+    }
+    
     private func checkAnswer(answer: Answer, question: Question) -> Bool {
         return  question.answers.contains(where: { $0.text == answer.text }) && answer.corret
     }
     
     private func setUpQuestions() {
-        quizzModels.append(Question(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit sem ut quam molestie congue. Quisque in nisi pellentesque, dignissim magna et, luctus quam. Aliquam erat volutpat. Morbi rutrum ante quis felis vehicula volutpat ut et justo.", answers: [Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit sem ut quam molestie congue.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit sem ut quam molestie congue.", corret: true), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit sem ut quam molestie congue.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit sem ut quam molestie congue.", corret: false)]))
+        quizzModels.append(Question(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit sem ut quam molestie congue. Quisque in nisi pellentesque, dignissim magna et, luctus quam. Aliquam erat volutpat. Morbi rutrum ante quis felis vehicula volutpat ut et justo.", answers: [Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: true), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false)]))
         
     }
     
@@ -117,11 +123,10 @@ class QuizzViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let hasChosenAnswer = selectedAnswer != -1
         let total = currentQuestion?.answers.count ?? 0
         var height = CGFloat(0)
 
-        if (section == total - 1) && hasChosenAnswer {
+        if (section == total - 1){
             height = CGFloat(80)
         }
 
@@ -136,14 +141,24 @@ class QuizzViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: answersTable.frame.width, height: 44.0))
         
-        let doneButton = UIButton(frame: CGRect(x: 0, y: 0, width: 280, height: 58))
-        doneButton.center = footerView.center
-        doneButton.setTitle("Verify", for: .normal)
-        doneButton.isEnabled = hasChosenAnswer
-        doneButton.backgroundColor = UIColor(named: "projectBlue")
+        let doneButton = UIButton()
         doneButton.layer.cornerRadius = 10.0
+        doneButton.center = footerView.center
+        doneButton.isEnabled = hasChosenAnswer
+        doneButton.setTitle("Verify", for: .normal)
+        doneButton.translatesAutoresizingMaskIntoConstraints = false
+        doneButton.addTarget(self, action: #selector(verifyAnswer), for: .touchUpInside)
+        doneButton.setTitleColor(UIColor(named: "projectWhite"), for: .normal)
+        doneButton.backgroundColor = hasChosenAnswer ? UIColor(named: "projectBlue") : UIColor(named: "projectGray")
         
         footerView.addSubview(doneButton)
+        
+        NSLayoutConstraint.activate([
+            doneButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 30),
+            doneButton.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: 0),
+            doneButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 30),
+            doneButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -30),
+        ])
 
         return footerView
     }
