@@ -21,7 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C454BBB626B2C9EB00B82199 /* NanoCrashChallenge2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NanoCrashChallenge2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C454BBB626B2C9EB00B82199 /* Easy Science.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Easy Science.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C454BBB926B2C9EB00B82199 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C454BBBB26B2C9EB00B82199 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C454BBBD26B2C9EB00B82199 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -58,7 +58,7 @@
 		C454BBB726B2C9EB00B82199 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C454BBB626B2C9EB00B82199 /* NanoCrashChallenge2.app */,
+				C454BBB626B2C9EB00B82199 /* Easy Science.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -99,7 +99,7 @@
 			);
 			name = NanoCrashChallenge2;
 			productName = NanoCrashChallenge2;
-			productReference = C454BBB626B2C9EB00B82199 /* NanoCrashChallenge2.app */;
+			productReference = C454BBB626B2C9EB00B82199 /* Easy Science.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -314,7 +314,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = br.dev.picolo.NanoCrashChallenge2;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Easy Science";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -333,7 +333,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = br.dev.picolo.NanoCrashChallenge2;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Easy Science";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
