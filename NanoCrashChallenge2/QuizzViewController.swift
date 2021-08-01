@@ -57,7 +57,7 @@ class QuizzViewController: UIViewController {
         questionsBar.layer.sublayers = nil
         for i in 1...total {
             if(i != currentQuestion?.id ?? 1) {
-                let circle = UIView(frame: CGRect(x: (i * 60), y: 30, width: 40, height: 40))
+                let circle = UIView(frame: CGRect(x: (i * 60), y: 28, width: 40, height: 40))
                 circle.backgroundColor = UIColor(named: "projectMediumPurple")
                 circle.layer.cornerRadius = 20
                 
@@ -69,7 +69,7 @@ class QuizzViewController: UIViewController {
                 questionsBar.addSubview(circle)
             }
             else {
-                let circle = UIView(frame: CGRect(x: (i * 60), y: 27, width: 44, height: 44))
+                let circle = UIView(frame: CGRect(x: (i * 60), y: 25, width: 44, height: 44))
                 let gradient = CAGradientLayer()
                 gradient.colors = [UIColor(named: "projectGradientStart")!.cgColor, UIColor(named: "projectGradientEnd")!.cgColor]
                 gradient.endPoint = CGPoint(x: 0.6, y: 0.5)
@@ -121,7 +121,7 @@ class QuizzViewController: UIViewController {
     }
     
     private func setUpQuestions() {
-        quizzModels.append(Question(id: 1, text: "Why stars have different colors?", answers: [Answer(text: "The color changes according to the temperature", corret: true), Answer(text: "Stars don't have colors", corret: false), Answer(text: "All stars have the same color", corret: false), Answer(text: "The color changes according to its chemical components", corret: false)]))
+        quizzModels.append(Question(id: 1, text: "Why do stars have different colors?", answers: [Answer(text: "The color changes according to the temperature", corret: true), Answer(text: "Stars don't have colors", corret: false), Answer(text: "All stars have the same color", corret: false), Answer(text: "The color changes according to its chemical components", corret: false)]))
         
         quizzModels.append(Question(id: 2, text: "What happens when metal is heated?", answers: [Answer(text: "It contracts", corret: false), Answer(text: "Metals don't get heated", corret: false), Answer(text: "Nothing happens", corret: false), Answer(text: "It expands", corret: true)]))
         
