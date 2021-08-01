@@ -7,7 +7,18 @@
 
 import UIKit
 
-class QuizzViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+struct Answer {
+    let text: String
+    let corret: Bool
+}
+
+
+struct Question {
+    let text: String
+    let answers: [Answer]
+}
+
+class QuizzViewController: UIViewController {
     var quizzModels = [Question]()
     
     var currentQuestion: Question?
@@ -43,6 +54,45 @@ class QuizzViewController: UIViewController, UITableViewDelegate, UITableViewDat
         answersTable.reloadData()
     }
     
+    @objc private func verifyAnswer() {
+        let answer = currentQuestion!.answers[selectedAnswer]
+        answeredCorrectly = currentQuestion?.answers.contains(where: { $0.text == answer.text }) ?? false && answer.corret
+        answersTable.reloadData()
+    }
+    
+    @objc private func nextQuestion() {
+        guard let question = currentQuestion else {
+            return
+        }
+
+        if let index = quizzModels.firstIndex(where: { $0.text == question.text }) {
+            if index < quizzModels.count - 1 {
+                let nextQuestion = quizzModels[index + 1]
+                currentQuestion = nil
+                configureUI(question: nextQuestion)
+            }
+            else {
+                let alert = UIAlertController(title: "Done", message: "Good job!", preferredStyle: .alert)
+                alert.addAction((UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)))
+                present(alert, animated: true)
+            }
+        }
+    }
+    
+    private func checkAnswer(answer: Answer, question: Question) -> Bool {
+        return  question.answers.contains(where: { $0.text == answer.text }) && answer.corret
+    }
+    
+    private func setUpQuestions() {
+        quizzModels.append(Question(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit sem ut quam molestie congue. Quisque in nisi pellentesque, dignissim magna et, luctus quam. Aliquam erat volutpat. Morbi rutrum ante quis felis vehicula volutpat ut et justo.", answers: [Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: true), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false)]))
+        
+        quizzModels.append(Question(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit sem ut quam molestie congue.", answers: [Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: true)]))
+        
+    }
+
+}
+
+extension QuizzViewController: UITableViewDelegate, UITableViewDataSource {
     private func configureButtonConstraints(_ button: UIButton, _ footer: UIView) {
         NSLayoutConstraint.activate([
             button.topAnchor.constraint(equalTo: footer.topAnchor, constant: 30),
@@ -83,43 +133,16 @@ class QuizzViewController: UIViewController, UITableViewDelegate, UITableViewDat
         configureButtonConstraints(verifyButton, footer)
     }
     
-    @objc private func verifyAnswer() {
-        let answer = currentQuestion!.answers[selectedAnswer]
-        answeredCorrectly = currentQuestion?.answers.contains(where: { $0.text == answer.text }) ?? false && answer.corret
-        answersTable.reloadData()
-    }
-    
-    @objc private func nextQuestion() {
-        guard let question = currentQuestion else {
-            return
-        }
-
-        if let index = quizzModels.firstIndex(where: { $0.text == question.text }) {
-            if index < quizzModels.count - 1 {
-                let nextQuestion = quizzModels[index + 1]
-                currentQuestion = nil
-                configureUI(question: nextQuestion)
-            }
-            else {
-                let alert = UIAlertController(title: "Done", message: "Good job!", preferredStyle: .alert)
-                alert.addAction((UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)))
-                present(alert, animated: true)
-            }
-        }
-    }
-    
-    private func checkAnswer(answer: Answer, question: Question) -> Bool {
-        return  question.answers.contains(where: { $0.text == answer.text }) && answer.corret
-    }
-    
-    private func setUpQuestions() {
-        quizzModels.append(Question(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit sem ut quam molestie congue. Quisque in nisi pellentesque, dignissim magna et, luctus quam. Aliquam erat volutpat. Morbi rutrum ante quis felis vehicula volutpat ut et justo.", answers: [Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: true), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false)]))
+    private func setUpTabeCell(_ cell: UITableViewCell) {
+        let selectedView = UIView()
+        selectedView.backgroundColor = UIColor.systemGray
         
-        quizzModels.append(Question(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit sem ut quam molestie congue.", answers: [Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: true), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false)]))
-        
+        cell.contentView.layer.borderWidth = 0.4
+        cell.contentView.layer.borderColor = UIColor(named: "projectWhite")!.cgColor
+        cell.contentView.layer.cornerRadius = 5
+        cell.selectedBackgroundView = selectedView
     }
     
-    // Table View Functions
     func numberOfSections(in tableView: UITableView) -> Int {
         return currentQuestion?.answers.count ?? 0
     }
@@ -135,30 +158,56 @@ class QuizzViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: AnswerTableViewCell.identifier, for: indexPath) as! AnswerTableViewCell
-        
-        if(selectedAnswer != indexPath.section) {
-            cell.configure(with: currentQuestion!.answers[indexPath.section].text, markerName: "circlebadge")
+        if answeredCorrectly != nil { // Has verified one answer
+            let cell = tableView.dequeueReusableCell(withIdentifier: AnswerTableViewCell.identifier, for: indexPath) as! AnswerTableViewCell
+            let answer = currentQuestion!.answers[indexPath.section]
+            
+            if(answer.corret) {
+                if(selectedAnswer == indexPath.section) {
+                    cell.configure(with: answer.text, markerName: "checkmark.circle.fill")
+                }
+                else {
+                    cell.configure(with: answer.text, markerName: "checkmark.circle.fill")
+                }
+            }
+            else {
+                if(selectedAnswer == indexPath.section) {
+                    cell.configure(with: answer.text, markerName: "xmark.circle.fill")
+                }
+                else {
+                    cell.configure(with: answer.text, markerName: "xmark.circle.fill")
+                }
+            }
+            
+            setUpTabeCell(cell)
+            return cell
         }
         else {
-            cell.configure(with: currentQuestion!.answers[indexPath.section].text, markerName: "circlebadge.fill")
+            let cell = tableView.dequeueReusableCell(withIdentifier: AnswerTableViewCell.identifier, for: indexPath) as! AnswerTableViewCell
+            if(selectedAnswer != indexPath.section) { // Verifies if row changed
+                cell.configure(with: currentQuestion!.answers[indexPath.section].text, markerName: "circlebadge")
+            }
+            else {
+                cell.configure(with: currentQuestion!.answers[indexPath.section].text, markerName: "circlebadge.fill")
+            }
+            
+            setUpTabeCell(cell)
+            return cell
         }
-        
-        let selectedView = UIView()
-        selectedView.backgroundColor = UIColor.systemGray
-        
-        // Adds border to cell
-        cell.contentView.layer.borderWidth = 0.4
-        cell.contentView.layer.borderColor = UIColor(named: "projectWhite")!.cgColor
-        cell.contentView.layer.cornerRadius = 5
-        cell.selectedBackgroundView = selectedView
-
-        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedAnswer = indexPath.section
-        answersTable.reloadData()
+        if selectedAnswer == -1 { // If not choosen, reloads whole table on first (because of footer)
+            selectedAnswer = indexPath.section
+            answersTable.reloadData()
+        }
+        else {
+            if answeredCorrectly == nil { // Changes only when no other cell has been marked as answer
+                let oldSelected = selectedAnswer
+                selectedAnswer = indexPath.section
+                answersTable.reloadSections([indexPath.section, oldSelected], with: .automatic)
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -187,14 +236,4 @@ class QuizzViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         return footerView
     }
-}
-
-struct Question {
-    let text: String
-    let answers: [Answer]
-}
-
-struct Answer {
-    let text: String
-    let corret: Bool
 }

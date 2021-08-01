@@ -8,6 +8,8 @@
 import UIKit
 
 class AnswerTableViewCell: UITableViewCell {
+    @IBOutlet var imageMarkerView: UIImageView!
+    @IBOutlet var answerText: UILabel!
     
     static let identifier = "AnswerTableViewCell"
     
@@ -19,9 +21,6 @@ class AnswerTableViewCell: UITableViewCell {
         answerText.text = text
         imageMarkerView.image = UIImage(systemName: markerName)
     }
-    
-    @IBOutlet var imageMarkerView: UIImageView!
-    @IBOutlet var answerText: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
