@@ -11,6 +11,7 @@ class QuizzViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var quizzModels = [Question]()
     
     var currentQuestion: Question?
+    var answeredCorrectly: Bool?
     var selectedAnswer = -1
     var navigationTitle = ""
     
@@ -34,15 +35,80 @@ class QuizzViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     private func configureUI(question: Question) {
         label.text = question.text
+        
         currentQuestion = question
+        answeredCorrectly = nil
+        selectedAnswer = -1
         
         answersTable.reloadData()
     }
     
-    @objc private func verifyAnswer() -> Bool {
-        print("ok")
-//        return question.answers.contains(where: { $0.text == answer.text }) && answer.corret
-        return true
+    private func setUpNextButton(_ footer: UIView) {
+        let doneButton = UIButton()
+        doneButton.layer.cornerRadius = 10.0
+        doneButton.center = footer.center
+        doneButton.setTitle("Next", for: .normal)
+        doneButton.translatesAutoresizingMaskIntoConstraints = false
+        doneButton.addTarget(self, action: #selector(nextQuestion), for: .touchUpInside)
+        doneButton.setTitleColor(UIColor(named: "projectWhite"), for: .normal)
+        doneButton.backgroundColor = answeredCorrectly! ? UIColor(named: "projectGreen") : UIColor(named: "projectRed")
+        
+        footer.addSubview(doneButton)
+        
+        NSLayoutConstraint.activate([
+            doneButton.topAnchor.constraint(equalTo: footer.topAnchor, constant: 30),
+            doneButton.bottomAnchor.constraint(equalTo: footer.bottomAnchor, constant: 0),
+            doneButton.leadingAnchor.constraint(equalTo: footer.leadingAnchor, constant: 30),
+            doneButton.trailingAnchor.constraint(equalTo: footer.trailingAnchor, constant: -30),
+        ])
+    }
+    
+    private func setUpVerifyButton(_ footer: UIView) {
+        let hasChosenAnswer = selectedAnswer != -1
+        
+        let doneButton = UIButton()
+        doneButton.layer.cornerRadius = 10.0
+        doneButton.center = footer.center
+        doneButton.isEnabled = hasChosenAnswer
+        doneButton.setTitle("Verify", for: .normal)
+        doneButton.translatesAutoresizingMaskIntoConstraints = false
+        doneButton.addTarget(self, action: #selector(verifyAnswer), for: .touchUpInside)
+        doneButton.setTitleColor(UIColor(named: "projectWhite"), for: .normal)
+        doneButton.backgroundColor = hasChosenAnswer ? UIColor(named: "projectBlue") : UIColor(named: "projectGray")
+        
+        footer.addSubview(doneButton)
+        
+        NSLayoutConstraint.activate([
+            doneButton.topAnchor.constraint(equalTo: footer.topAnchor, constant: 30),
+            doneButton.bottomAnchor.constraint(equalTo: footer.bottomAnchor, constant: 0),
+            doneButton.leadingAnchor.constraint(equalTo: footer.leadingAnchor, constant: 30),
+            doneButton.trailingAnchor.constraint(equalTo: footer.trailingAnchor, constant: -30),
+        ])
+    }
+    
+    @objc private func verifyAnswer() {
+        let answer = currentQuestion!.answers[selectedAnswer]
+        answeredCorrectly = currentQuestion?.answers.contains(where: { $0.text == answer.text }) ?? false && answer.corret
+        answersTable.reloadData()
+    }
+    
+    @objc private func nextQuestion() {
+        guard let question = currentQuestion else {
+            return
+        }
+
+        if let index = quizzModels.firstIndex(where: { $0.text == question.text }) {
+            if index < quizzModels.count - 1 {
+                let nextQuestion = quizzModels[index + 1]
+                currentQuestion = nil
+                configureUI(question: nextQuestion)
+            }
+            else {
+                let alert = UIAlertController(title: "Done", message: "Good job!", preferredStyle: .alert)
+                alert.addAction((UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)))
+                present(alert, animated: true)
+            }
+        }
     }
     
     private func checkAnswer(answer: Answer, question: Question) -> Bool {
@@ -51,6 +117,8 @@ class QuizzViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     private func setUpQuestions() {
         quizzModels.append(Question(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit sem ut quam molestie congue. Quisque in nisi pellentesque, dignissim magna et, luctus quam. Aliquam erat volutpat. Morbi rutrum ante quis felis vehicula volutpat ut et justo.", answers: [Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: true), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false)]))
+        
+        quizzModels.append(Question(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit sem ut quam molestie congue.", answers: [Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: true), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false)]))
         
     }
     
@@ -94,32 +162,6 @@ class QuizzViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedAnswer = indexPath.section
         answersTable.reloadData()
-        
-//        guard let question = currentQuestion else {
-//            return
-//        }
-//        let answer = question.answers[indexPath.row]
-//        
-//        if checkAnswer(answer: answer, question: question) {
-//            if let index = quizzModels.firstIndex(where: { $0.text == question.text }) {
-//                if index < quizzModels.count - 1 {
-//                    let nextQuestion = quizzModels[index + 1]
-//                    currentQuestion = nil
-//                    configureUI(question: nextQuestion)
-//                }
-//                else {
-//                    let alert = UIAlertController(title: "Done", message: "Good job!", preferredStyle: .alert)
-//                    alert.addAction((UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)))
-//                    present(alert, animated: true)
-//                }
-//            }
-//            
-//        }
-//        else {
-//            let alert = UIAlertController(title: "Wrong", message: "Try again", preferredStyle: .alert)
-//            alert.addAction((UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)))
-//            present(alert, animated: true)
-//        }
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -134,31 +176,17 @@ class QuizzViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let hasChosenAnswer = selectedAnswer != -1
-        
         let total = currentQuestion?.answers.count ?? 0
         guard section == total - 1 else { return nil }
 
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: answersTable.frame.width, height: 44.0))
         
-        let doneButton = UIButton()
-        doneButton.layer.cornerRadius = 10.0
-        doneButton.center = footerView.center
-        doneButton.isEnabled = hasChosenAnswer
-        doneButton.setTitle("Verify", for: .normal)
-        doneButton.translatesAutoresizingMaskIntoConstraints = false
-        doneButton.addTarget(self, action: #selector(verifyAnswer), for: .touchUpInside)
-        doneButton.setTitleColor(UIColor(named: "projectWhite"), for: .normal)
-        doneButton.backgroundColor = hasChosenAnswer ? UIColor(named: "projectBlue") : UIColor(named: "projectGray")
-        
-        footerView.addSubview(doneButton)
-        
-        NSLayoutConstraint.activate([
-            doneButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 30),
-            doneButton.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: 0),
-            doneButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 30),
-            doneButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -30),
-        ])
+        if answeredCorrectly != nil {
+            setUpNextButton(footerView)
+        }
+        else {
+            setUpVerifyButton(footerView)
+        }
 
         return footerView
     }
