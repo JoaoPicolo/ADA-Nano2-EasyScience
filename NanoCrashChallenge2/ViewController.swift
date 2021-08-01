@@ -14,6 +14,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet var profileName: UILabel!
     @IBOutlet var profilePicture: UIImageView!
     @IBOutlet var categoriesTable: UITableView!
+    @IBOutlet var tabBar: UITabBar!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         profilePicture.layer.masksToBounds = false
         profilePicture.layer.cornerRadius = profilePicture.frame.height / 2
         profilePicture.clipsToBounds = true
+        
+        tabBar.selectedItem = tabBar.items?.first
         
     }
     

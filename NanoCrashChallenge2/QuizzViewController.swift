@@ -43,47 +43,44 @@ class QuizzViewController: UIViewController, UITableViewDelegate, UITableViewDat
         answersTable.reloadData()
     }
     
-    private func setUpNextButton(_ footer: UIView) {
-        let doneButton = UIButton()
-        doneButton.layer.cornerRadius = 10.0
-        doneButton.center = footer.center
-        doneButton.setTitle("Next", for: .normal)
-        doneButton.translatesAutoresizingMaskIntoConstraints = false
-        doneButton.addTarget(self, action: #selector(nextQuestion), for: .touchUpInside)
-        doneButton.setTitleColor(UIColor(named: "projectWhite"), for: .normal)
-        doneButton.backgroundColor = answeredCorrectly! ? UIColor(named: "projectGreen") : UIColor(named: "projectRed")
-        
-        footer.addSubview(doneButton)
-        
+    private func configureButtonConstraints(_ button: UIButton, _ footer: UIView) {
         NSLayoutConstraint.activate([
-            doneButton.topAnchor.constraint(equalTo: footer.topAnchor, constant: 30),
-            doneButton.bottomAnchor.constraint(equalTo: footer.bottomAnchor, constant: 0),
-            doneButton.leadingAnchor.constraint(equalTo: footer.leadingAnchor, constant: 30),
-            doneButton.trailingAnchor.constraint(equalTo: footer.trailingAnchor, constant: -30),
+            button.topAnchor.constraint(equalTo: footer.topAnchor, constant: 30),
+            button.bottomAnchor.constraint(equalTo: footer.bottomAnchor, constant: 0),
+            button.leadingAnchor.constraint(equalTo: footer.leadingAnchor, constant: 30),
+            button.trailingAnchor.constraint(equalTo: footer.trailingAnchor, constant: -30),
         ])
+    }
+    
+    private func setUpNextButton(_ footer: UIView) {
+        let nextButton = UIButton()
+        nextButton.layer.cornerRadius = 10.0
+        nextButton.center = footer.center
+        nextButton.setTitle("Next", for: .normal)
+        nextButton.translatesAutoresizingMaskIntoConstraints = false
+        nextButton.addTarget(self, action: #selector(nextQuestion), for: .touchUpInside)
+        nextButton.setTitleColor(UIColor(named: "projectWhite"), for: .normal)
+        nextButton.backgroundColor = answeredCorrectly! ? UIColor(named: "projectGreen") : UIColor(named: "projectRed")
+        
+        footer.addSubview(nextButton)
+        configureButtonConstraints(nextButton, footer)
     }
     
     private func setUpVerifyButton(_ footer: UIView) {
         let hasChosenAnswer = selectedAnswer != -1
         
-        let doneButton = UIButton()
-        doneButton.layer.cornerRadius = 10.0
-        doneButton.center = footer.center
-        doneButton.isEnabled = hasChosenAnswer
-        doneButton.setTitle("Verify", for: .normal)
-        doneButton.translatesAutoresizingMaskIntoConstraints = false
-        doneButton.addTarget(self, action: #selector(verifyAnswer), for: .touchUpInside)
-        doneButton.setTitleColor(UIColor(named: "projectWhite"), for: .normal)
-        doneButton.backgroundColor = hasChosenAnswer ? UIColor(named: "projectBlue") : UIColor(named: "projectGray")
+        let verifyButton = UIButton()
+        verifyButton.layer.cornerRadius = 10.0
+        verifyButton.center = footer.center
+        verifyButton.isEnabled = hasChosenAnswer
+        verifyButton.setTitle("Verify", for: .normal)
+        verifyButton.translatesAutoresizingMaskIntoConstraints = false
+        verifyButton.addTarget(self, action: #selector(verifyAnswer), for: .touchUpInside)
+        verifyButton.setTitleColor(UIColor(named: "projectWhite"), for: .normal)
+        verifyButton.backgroundColor = hasChosenAnswer ? UIColor(named: "projectBlue") : UIColor(named: "projectGray")
         
-        footer.addSubview(doneButton)
-        
-        NSLayoutConstraint.activate([
-            doneButton.topAnchor.constraint(equalTo: footer.topAnchor, constant: 30),
-            doneButton.bottomAnchor.constraint(equalTo: footer.bottomAnchor, constant: 0),
-            doneButton.leadingAnchor.constraint(equalTo: footer.leadingAnchor, constant: 30),
-            doneButton.trailingAnchor.constraint(equalTo: footer.trailingAnchor, constant: -30),
-        ])
+        footer.addSubview(verifyButton)
+        configureButtonConstraints(verifyButton, footer)
     }
     
     @objc private func verifyAnswer() {
