@@ -38,8 +38,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     private func setUpCategories() {
         categories.append(Category(name: "All fields", description: "Test your general knowledge about all fields of science", iconName: "books"))
-        categories.append(Category(name: "Astronomy", description: "Check out 7 questions about the wonders of our universe", iconName: "telescope"))
-        categories.append(Category(name: "Chemistry", description: "Check out 7 questions about the science of matter", iconName: "chemistry"))
+        categories.append(Category(name: "Astronomy", description: "Check out 5 questions about the wonders of our universe", iconName: "telescope"))
+        categories.append(Category(name: "Chemistry", description: "Check out 5 questions about the science of matter", iconName: "chemistry"))
     }
     
     // Table functions

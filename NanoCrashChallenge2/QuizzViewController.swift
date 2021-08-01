@@ -84,10 +84,15 @@ class QuizzViewController: UIViewController {
     }
     
     private func setUpQuestions() {
-        quizzModels.append(Question(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit sem ut quam molestie congue. Quisque in nisi pellentesque, dignissim magna et, luctus quam. Aliquam erat volutpat. Morbi rutrum ante quis felis vehicula volutpat ut et justo.", answers: [Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: true), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false)]))
+        quizzModels.append(Question(text: "Why stars have different colors?", answers: [Answer(text: "The color changes according to the temperature", corret: true), Answer(text: "Stars don't have colors", corret: false), Answer(text: "All stars have the same color", corret: false), Answer(text: "The color changes according to its chemical components", corret: false)]))
         
-        quizzModels.append(Question(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit sem ut quam molestie congue.", answers: [Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: false), Answer(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", corret: true)]))
+        quizzModels.append(Question(text: "What happens when metal is heated?", answers: [Answer(text: "It contracts", corret: false), Answer(text: "Metals don't get heated", corret: false), Answer(text: "Nothing happens", corret: false), Answer(text: "It expands", corret: true)]))
         
+        quizzModels.append(Question(text: "What are shooting stars?", answers: [Answer(text: "Shooting stars are stars heavier than gravity", corret: false), Answer(text: "They are bits of dust and rocks falling into the atmosphere", corret: true), Answer(text: "They are glowing balloons", corret: false), Answer(text: "Ther are a different type of rain", corret: false)]))
+        
+        quizzModels.append(Question(text: "What are the world's biggest oxygen producer?", answers: [Answer(text: "Indoor plants, because of its quantity", corret: false), Answer(text: "Pythoplanktons are the biggest producers", corret: true), Answer(text: "All plants produce the same amount of oxygen", corret: false), Answer(text: "Trees are the biggest producers", corret: false)]))
+        
+        quizzModels.append(Question(text: "What is an atom?", answers: [Answer(text: "Atoms are the smallest stars in universe", corret: false), Answer(text: "It's a chemical compound", corret: false), Answer(text: "One of the smallest pieces of matter", corret: true), Answer(text: "It's a law of physics", corret: false)]))
     }
 
 }
@@ -95,8 +100,8 @@ class QuizzViewController: UIViewController {
 extension QuizzViewController: UITableViewDelegate, UITableViewDataSource {
     private func configureButtonConstraints(_ button: UIButton, _ footer: UIView) {
         NSLayoutConstraint.activate([
-            button.topAnchor.constraint(equalTo: footer.topAnchor, constant: 30),
-            button.bottomAnchor.constraint(equalTo: footer.bottomAnchor, constant: 0),
+            button.topAnchor.constraint(equalTo: footer.topAnchor, constant: 40),
+            button.bottomAnchor.constraint(equalTo: footer.bottomAnchor, constant: 10),
             button.leadingAnchor.constraint(equalTo: footer.leadingAnchor, constant: 30),
             button.trailingAnchor.constraint(equalTo: footer.trailingAnchor, constant: -30),
         ])
@@ -133,14 +138,30 @@ extension QuizzViewController: UITableViewDelegate, UITableViewDataSource {
         configureButtonConstraints(verifyButton, footer)
     }
     
-    private func setUpTabeCell(_ cell: UITableViewCell) {
-        let selectedView = UIView()
-        selectedView.backgroundColor = UIColor.systemGray
-        
+    private func setUpTabeCell(_ cell: AnswerTableViewCell, selectedCell: Bool) {
         cell.contentView.layer.borderWidth = 0.4
-        cell.contentView.layer.borderColor = UIColor(named: "projectWhite")!.cgColor
         cell.contentView.layer.cornerRadius = 5
-        cell.selectedBackgroundView = selectedView
+        
+        if selectedCell {
+            cell.answerText.textColor = UIColor(named: "projectBlack")
+            
+            if answeredCorrectly! {
+                cell.contentView.layer.borderColor = UIColor(named: "projectBackgroundGreen")!.cgColor
+                cell.contentView.backgroundColor = UIColor(named: "projectBackgroundGreen")
+                cell.imageMarkerView.tintColor = UIColor(named: "projectGreen")
+            }
+            else {
+                cell.contentView.layer.borderColor = UIColor(named: "projectBackgroundRed")!.cgColor
+                cell.contentView.backgroundColor = UIColor(named: "projectBackgroundRed")
+                cell.imageMarkerView.tintColor = UIColor(named: "projectRed")
+            }
+        }
+        else {
+            cell.answerText.textColor = UIColor(named: "projectWhite")
+            cell.contentView.layer.borderColor = UIColor(named: "projectWhite")!.cgColor
+            cell.imageMarkerView.tintColor = UIColor(named: "projectWhite")
+            cell.contentView.backgroundColor = UIColor.clear
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -157,41 +178,36 @@ extension QuizzViewController: UITableViewDelegate, UITableViewDataSource {
         return 1
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if answeredCorrectly != nil { // Has verified one answer
             let cell = tableView.dequeueReusableCell(withIdentifier: AnswerTableViewCell.identifier, for: indexPath) as! AnswerTableViewCell
             let answer = currentQuestion!.answers[indexPath.section]
             
             if(answer.corret) {
-                if(selectedAnswer == indexPath.section) {
-                    cell.configure(with: answer.text, markerName: "checkmark.circle.fill")
-                }
-                else {
-                    cell.configure(with: answer.text, markerName: "checkmark.circle.fill")
-                }
+                cell.configure(with: answer.text, markerName: "checkmark.circle.fill")
+                setUpTabeCell(cell, selectedCell: selectedAnswer == indexPath.section)
             }
             else {
-                if(selectedAnswer == indexPath.section) {
-                    cell.configure(with: answer.text, markerName: "xmark.circle.fill")
-                }
-                else {
-                    cell.configure(with: answer.text, markerName: "xmark.circle.fill")
-                }
+                cell.configure(with: answer.text, markerName: "xmark.circle.fill")
+                setUpTabeCell(cell, selectedCell: selectedAnswer == indexPath.section)
             }
             
-            setUpTabeCell(cell)
             return cell
         }
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: AnswerTableViewCell.identifier, for: indexPath) as! AnswerTableViewCell
-            if(selectedAnswer != indexPath.section) { // Verifies if row changed
+            if(selectedAnswer != indexPath.section) {
                 cell.configure(with: currentQuestion!.answers[indexPath.section].text, markerName: "circlebadge")
             }
             else {
                 cell.configure(with: currentQuestion!.answers[indexPath.section].text, markerName: "circlebadge.fill")
             }
             
-            setUpTabeCell(cell)
+            setUpTabeCell(cell, selectedCell: false)
             return cell
         }
     }
