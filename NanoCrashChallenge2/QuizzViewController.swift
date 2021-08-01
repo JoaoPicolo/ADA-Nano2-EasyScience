@@ -11,19 +11,24 @@ class QuizzViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var quizzModels = [Question]()
     
     var currentQuestion: Question?
+    var selectedAnswer = -1
+    var navigationTitle = ""
     
     @IBOutlet var label: UILabel!
-    @IBOutlet var table: UITableView!
+    @IBOutlet var answersTable: UITableView!
+    @IBOutlet var quizzNavigationItem: UINavigationItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        table.register(AnswerTableViewCell.nib(), forCellReuseIdentifier: AnswerTableViewCell.identifier)
-        table.delegate = self
-        table.dataSource = self
+        answersTable.register(AnswerTableViewCell.nib(), forCellReuseIdentifier: AnswerTableViewCell.identifier)
+        answersTable.delegate = self
+        answersTable.dataSource = self
+
         setUpQuestions()
         
+        quizzNavigationItem.title = navigationTitle
         configureUI(question: quizzModels.first!)
     }
     
@@ -31,7 +36,7 @@ class QuizzViewController: UIViewController, UITableViewDelegate, UITableViewDat
         label.text = question.text
         currentQuestion = question
         
-        table.reloadData()
+        answersTable.reloadData()
     }
     
     private func checkAnswer(answer: Answer, question: Question) -> Bool {
@@ -60,46 +65,88 @@ class QuizzViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AnswerTableViewCell.identifier, for: indexPath) as! AnswerTableViewCell
-        cell.configure(with: currentQuestion!.answers[indexPath.section].text, markerName: "circlebadge")
+        
+        if(selectedAnswer != indexPath.section) {
+            cell.configure(with: currentQuestion!.answers[indexPath.section].text, markerName: "circlebadge")
+        }
+        else {
+            cell.configure(with: currentQuestion!.answers[indexPath.section].text, markerName: "circlebadge.fill")
+        }
+        
+        let selectedView = UIView()
+        selectedView.backgroundColor = UIColor.systemGray
         
         // Adds border to cell
         cell.contentView.layer.borderWidth = 0.4
         cell.contentView.layer.borderColor = UIColor(named: "projectWhite")!.cgColor
         cell.contentView.layer.cornerRadius = 5
+        cell.selectedBackgroundView = selectedView
 
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        selectedAnswer = indexPath.section
+        answersTable.reloadData()
         
-        guard let question = currentQuestion else {
-            return
-        }
-        let answer = question.answers[indexPath.row]
-        
-        if checkAnswer(answer: answer, question: question) {
-            if let index = quizzModels.firstIndex(where: { $0.text == question.text }) {
-                if index < quizzModels.count - 1 {
-                    let nextQuestion = quizzModels[index + 1]
-                    currentQuestion = nil
-                    configureUI(question: nextQuestion)
-                }
-                else {
-                    let alert = UIAlertController(title: "Done", message: "Good job!", preferredStyle: .alert)
-                    alert.addAction((UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)))
-                    present(alert, animated: true)
-                }
-            }
-            
-        }
-        else {
-            let alert = UIAlertController(title: "Wrong", message: "Try again", preferredStyle: .alert)
-            alert.addAction((UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)))
-            present(alert, animated: true)
-        }
+//        guard let question = currentQuestion else {
+//            return
+//        }
+//        let answer = question.answers[indexPath.row]
+//        
+//        if checkAnswer(answer: answer, question: question) {
+//            if let index = quizzModels.firstIndex(where: { $0.text == question.text }) {
+//                if index < quizzModels.count - 1 {
+//                    let nextQuestion = quizzModels[index + 1]
+//                    currentQuestion = nil
+//                    configureUI(question: nextQuestion)
+//                }
+//                else {
+//                    let alert = UIAlertController(title: "Done", message: "Good job!", preferredStyle: .alert)
+//                    alert.addAction((UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)))
+//                    present(alert, animated: true)
+//                }
+//            }
+//            
+//        }
+//        else {
+//            let alert = UIAlertController(title: "Wrong", message: "Try again", preferredStyle: .alert)
+//            alert.addAction((UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)))
+//            present(alert, animated: true)
+//        }
     }
     
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        let hasChosenAnswer = selectedAnswer != -1
+        let total = currentQuestion?.answers.count ?? 0
+        var height = CGFloat(0)
+
+        if (section == total - 1) && hasChosenAnswer {
+            height = CGFloat(80)
+        }
+
+        return height
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let hasChosenAnswer = selectedAnswer != -1
+        
+        let total = currentQuestion?.answers.count ?? 0
+        guard section == total - 1 else { return nil }
+
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: answersTable.frame.width, height: 44.0))
+        
+        let doneButton = UIButton(frame: CGRect(x: 0, y: 0, width: 280, height: 58))
+        doneButton.center = footerView.center
+        doneButton.setTitle("Verify", for: .normal)
+        doneButton.isEnabled = hasChosenAnswer
+        doneButton.backgroundColor = UIColor(named: "projectBlue")
+        doneButton.layer.cornerRadius = 10.0
+        
+        footerView.addSubview(doneButton)
+
+        return footerView
+    }
 }
 
 struct Question {

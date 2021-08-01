@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     var categories = [Category]()
-    
+
     @IBOutlet var inspirationText: UILabel!
     @IBOutlet var profileName: UILabel!
     @IBOutlet var profilePicture: UIImageView!
@@ -69,11 +69,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         return cell
     }
-    
+
+    // Navigates between View Controllers
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        categoriesTable.deselectRow(at: indexPath, animated: true)
-        
         performSegue(withIdentifier: "startQuizz", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? QuizzViewController {
+            destination.navigationTitle = categories[(categoriesTable.indexPathForSelectedRow?.section)!].name
+            categoriesTable.deselectRow(at: categoriesTable.indexPathForSelectedRow!, animated: true)
+        }
     }
     
     // Navigation Controller functions

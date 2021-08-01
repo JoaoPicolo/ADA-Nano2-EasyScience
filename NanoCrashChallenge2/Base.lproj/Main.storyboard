@@ -159,8 +159,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="cCG-JK-yW9"/>
                     <connections>
+                        <outlet property="answersTable" destination="GVg-em-7CL" id="vhO-Kw-coV"/>
                         <outlet property="label" destination="inr-X5-ahW" id="nzX-9q-SCg"/>
-                        <outlet property="table" destination="GVg-em-7CL" id="vhO-Kw-coV"/>
+                        <outlet property="quizzNavigationItem" destination="cCG-JK-yW9" id="ZaM-Df-Xka"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fja-mB-gPK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
