@@ -172,11 +172,42 @@
                         <outlet property="label" destination="inr-X5-ahW" id="nzX-9q-SCg"/>
                         <outlet property="questionsBar" destination="Sl5-Vb-sen" id="lHu-NS-HLl"/>
                         <outlet property="quizzNavigationItem" destination="cCG-JK-yW9" id="ZaM-Df-Xka"/>
+                        <segue destination="RSG-Zx-I5a" kind="show" identifier="endQuizz" id="Dj6-1M-QWP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fja-mB-gPK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1089.8550724637682" y="107.8125"/>
+        </scene>
+        <!--Results View Controller-->
+        <scene sceneID="Be7-Gt-toT">
+            <objects>
+                <viewController id="RSG-Zx-I5a" customClass="ResultsViewController" customModule="Easy_Science" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="f7N-1Z-zJM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Good Job" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UkS-At-4Tm">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" name="projectWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="mlV-2u-pCY"/>
+                        <color key="backgroundColor" name="projectPurple"/>
+                        <constraints>
+                            <constraint firstItem="mlV-2u-pCY" firstAttribute="bottom" secondItem="UkS-At-4Tm" secondAttribute="bottom" id="h5t-MO-zFp"/>
+                            <constraint firstItem="mlV-2u-pCY" firstAttribute="trailing" secondItem="UkS-At-4Tm" secondAttribute="trailing" id="pbb-Lr-5WI"/>
+                            <constraint firstItem="UkS-At-4Tm" firstAttribute="top" secondItem="mlV-2u-pCY" secondAttribute="top" id="y69-rd-zfD"/>
+                            <constraint firstItem="UkS-At-4Tm" firstAttribute="centerX" secondItem="f7N-1Z-zJM" secondAttribute="centerX" id="zih-3N-Bvd"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="aPM-7e-zHn"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OEe-0N-QZL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1958" y="108"/>
         </scene>
     </scenes>
     <resources>

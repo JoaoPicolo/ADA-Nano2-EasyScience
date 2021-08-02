@@ -16,6 +16,7 @@
 		C454BBCE26B2CF6D00B82199 /* QuizzViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C454BBCD26B2CF6D00B82199 /* QuizzViewController.swift */; };
 		C454BBD126B2DF6E00B82199 /* AnswerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C454BBCF26B2DF6E00B82199 /* AnswerTableViewCell.swift */; };
 		C454BBD226B2DF6E00B82199 /* AnswerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C454BBD026B2DF6E00B82199 /* AnswerTableViewCell.xib */; };
+		C4A5AE8426B74FCE00324D5B /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A5AE8326B74FCE00324D5B /* ResultsViewController.swift */; };
 		C4A9C02C26B437BA00201DC7 /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A9C02A26B437BA00201DC7 /* CategoryTableViewCell.swift */; };
 		C4A9C02D26B437BA00201DC7 /* CategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4A9C02B26B437BA00201DC7 /* CategoryTableViewCell.xib */; };
 /* End PBXBuildFile section */
@@ -32,6 +33,7 @@
 		C454BBCD26B2CF6D00B82199 /* QuizzViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzViewController.swift; sourceTree = "<group>"; };
 		C454BBCF26B2DF6E00B82199 /* AnswerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerTableViewCell.swift; sourceTree = "<group>"; };
 		C454BBD026B2DF6E00B82199 /* AnswerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnswerTableViewCell.xib; sourceTree = "<group>"; };
+		C4A5AE8326B74FCE00324D5B /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
 		C4A9C02A26B437BA00201DC7 /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
 		C4A9C02B26B437BA00201DC7 /* CategoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -78,6 +80,7 @@
 				C454BBCD26B2CF6D00B82199 /* QuizzViewController.swift */,
 				C454BBCF26B2DF6E00B82199 /* AnswerTableViewCell.swift */,
 				C454BBD026B2DF6E00B82199 /* AnswerTableViewCell.xib */,
+				C4A5AE8326B74FCE00324D5B /* ResultsViewController.swift */,
 			);
 			path = NanoCrashChallenge2;
 			sourceTree = "<group>";
@@ -157,6 +160,7 @@
 				C454BBBE26B2C9EB00B82199 /* ViewController.swift in Sources */,
 				C454BBBA26B2C9EB00B82199 /* AppDelegate.swift in Sources */,
 				C454BBCE26B2CF6D00B82199 /* QuizzViewController.swift in Sources */,
+				C4A5AE8426B74FCE00324D5B /* ResultsViewController.swift in Sources */,
 				C454BBD126B2DF6E00B82199 /* AnswerTableViewCell.swift in Sources */,
 				C454BBBC26B2C9EB00B82199 /* SceneDelegate.swift in Sources */,
 				C4A9C02C26B437BA00201DC7 /* CategoryTableViewCell.swift in Sources */,

@@ -109,9 +109,7 @@ class QuizzViewController: UIViewController {
                 configureUI(question: nextQuestion)
             }
             else {
-                let alert = UIAlertController(title: "Done", message: "Good job!", preferredStyle: .alert)
-                alert.addAction((UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)))
-                present(alert, animated: true)
+                performSegue(withIdentifier: "endQuizz", sender: self)
             }
         }
     }
